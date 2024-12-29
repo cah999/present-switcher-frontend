@@ -25,7 +25,7 @@ function App() {
     const [showTurns, setShowTurns] = useState(false);
     const webSocketUrl = 'ws://147.45.76.239:8080/ws/game';
 
-
+    console.log("webSocketUrl", webSocketUrl);
     const {sendMessage} = useWebSocket(
         webSocketUrl,
         (message) => {

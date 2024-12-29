@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 
 const useWebSocket = (url, onMessageCallback) => {
+    console.log("useWebSocket", url);
     const socketRef = useRef(null);
     const [isConnected, setIsConnected] = useState(false); // Состояние для отслеживания подключения
 

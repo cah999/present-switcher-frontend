@@ -26,85 +26,86 @@ function App() {
     const webSocketUrl = 'ws://147.45.76.555:9090/ws/games';
 
     console.log("webSocketUrl", webSocketUrl);
-    const {sendMessage} = useWebSocket(
-        webSocketUrl,
-        (message) => {
-            switch (message.action) {
-                case "JOINED_PLAYER":
-                    setThisPlayer(message.data);
-                    localStorage.setItem('playerId', message.data.id);
-                    localStorage.setItem("nickname", message.data.name);
-                    setSavedId(message.data.id);
-                    setIsConnected(true);
-                    break;
-                case 'UPDATE_PLAYERS':
-                    setPlayers(message.data);
-                    break;
-                case 'ROUND_NAME':
-                    setRoundText("Раунд: " + message.data);
-                    setIsGameFinished(false);
-                    // setRoundAdditionalText(null);
-                    break;
-                case "UPDATE_SWAPPED_PLAYERS":
-                    const {first, second} = message.data;
-
-                    setPlayers((prevPlayers) => {
-                        const player1 = prevPlayers.find((player) => player.id === first);
-                        const player2 = prevPlayers.find((player) => player.id === second);
-
-                        if (!player1 || !player2) {
-                            console.error("Players not found for swapping");
-                            return prevPlayers;
-                        }
-
-                        const player1Index = prevPlayers.indexOf(player1);
-                        const player2Index = prevPlayers.indexOf(player2);
-
-                        const newPlayers = [...prevPlayers];
-
-                        newPlayers[player1Index] = player2;
-                        newPlayers[player2Index] = player1;
-
-                        setSwapMessage(`${player1.name} и ${player2.name} поменялись подарками`);
-                        setTimeout(() => {
-                            setSwapMessage(null);
-                        }, 2900);
-                        return newPlayers;
-                    });
-
-                    break;
-                case "VIEW_GIFT":
-                    // console.log('Gift:', message.data);
-                    setGift(message.data);
-                    break
-                case "START_QUEUE":
-                    // console.log('Queue:', message.data);
-                    setPlayers(message.data.queue);
-                    break
-                case "FINAL_QUEUE":
-                    // console.log('Queue:', message.data);
-                    setPlayers(message.data.queue);
-                    setShowTurns(true);
-                    break
-                case "PLAYER_TURN":
-                    // console.log('Player:', message.data);
-                    setSwapPlayerTurn(message.data);
-                    if (message.data) {
-                        setRoundAdditionalText("Очередь игрока: " + message.data.name);
-                    } else {
-                        setRoundAdditionalText(null);
-                    }
-                    break
-                case "GAME_FINISH":
-                    // console.log('Game finish:', message.data);
-                    setIsGameFinished(true);
-                    setFinalGifts(message.data);
-                    break
-                default:
-                    console.warn('Unhandled WebSocket action:', message.action);
-            }
-        }
-    );
+    const {sendMessage} = useWebSocket()
+    // const {sendMessage} = useWebSocket(
+    //     webSocketUrl,
+    //     (message) => {
+    //         switch (message.action) {
+    //             case "JOINED_PLAYER":
+    //                 setThisPlayer(message.data);
+    //                 localStorage.setItem('playerId', message.data.id);
+    //                 localStorage.setItem("nickname", message.data.name);
+    //                 setSavedId(message.data.id);
+    //                 setIsConnected(true);
+    //                 break;
+    //             case 'UPDATE_PLAYERS':
+    //                 setPlayers(message.data);
+    //                 break;
+    //             case 'ROUND_NAME':
+    //                 setRoundText("Раунд: " + message.data);
+    //                 setIsGameFinished(false);
+    //                 // setRoundAdditionalText(null);
+    //                 break;
+    //             case "UPDATE_SWAPPED_PLAYERS":
+    //                 const {first, second} = message.data;
+    //
+    //                 setPlayers((prevPlayers) => {
+    //                     const player1 = prevPlayers.find((player) => player.id === first);
+    //                     const player2 = prevPlayers.find((player) => player.id === second);
+    //
+    //                     if (!player1 || !player2) {
+    //                         console.error("Players not found for swapping");
+    //                         return prevPlayers;
+    //                     }
+    //
+    //                     const player1Index = prevPlayers.indexOf(player1);
+    //                     const player2Index = prevPlayers.indexOf(player2);
+    //
+    //                     const newPlayers = [...prevPlayers];
+    //
+    //                     newPlayers[player1Index] = player2;
+    //                     newPlayers[player2Index] = player1;
+    //
+    //                     setSwapMessage(`${player1.name} и ${player2.name} поменялись подарками`);
+    //                     setTimeout(() => {
+    //                         setSwapMessage(null);
+    //                     }, 2900);
+    //                     return newPlayers;
+    //                 });
+    //
+    //                 break;
+    //             case "VIEW_GIFT":
+    //                 // console.log('Gift:', message.data);
+    //                 setGift(message.data);
+    //                 break
+    //             case "START_QUEUE":
+    //                 // console.log('Queue:', message.data);
+    //                 setPlayers(message.data.queue);
+    //                 break
+    //             case "FINAL_QUEUE":
+    //                 // console.log('Queue:', message.data);
+    //                 setPlayers(message.data.queue);
+    //                 setShowTurns(true);
+    //                 break
+    //             case "PLAYER_TURN":
+    //                 // console.log('Player:', message.data);
+    //                 setSwapPlayerTurn(message.data);
+    //                 if (message.data) {
+    //                     setRoundAdditionalText("Очередь игрока: " + message.data.name);
+    //                 } else {
+    //                     setRoundAdditionalText(null);
+    //                 }
+    //                 break
+    //             case "GAME_FINISH":
+    //                 // console.log('Game finish:', message.data);
+    //                 setIsGameFinished(true);
+    //                 setFinalGifts(message.data);
+    //                 break
+    //             default:
+    //                 console.warn('Unhandled WebSocket action:', message.action);
+    //         }
+    //     }
+    // );
 
     const handleJoin = (nickname) => {
         sendMessage({action: 'JOIN_GAME', data: {name: nickname, playerId: savedId}});

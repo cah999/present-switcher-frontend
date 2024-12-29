@@ -23,10 +23,11 @@ function App() {
     const [isGameFinished, setIsGameFinished] = useState(false);
     const [finalGifts, setFinalGifts] = useState(null);
     const [showTurns, setShowTurns] = useState(false);
+    const apiUrl = process.env.REACT_APP_API_URL || 'ws://localhost:8080';
 
 
     const {sendMessage} = useWebSocket(
-        'ws://localhost:8080/ws/game',
+        apiUrl + "/ws/game",
         (message) => {
             switch (message.action) {
                 case "JOINED_PLAYER":

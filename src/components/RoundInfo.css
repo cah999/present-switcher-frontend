@@ -1,0 +1,10 @@
+.round-info {
+    width: 80%;
+    margin: 30px auto;
+    text-align: center;
+    font-family: 'Excalifont', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    padding: 20px;
+}

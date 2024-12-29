@@ -1,0 +1,51 @@
+.waiting-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Excalifont', sans-serif;
+    color: #333;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.waiting-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.waiting-players {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.waiting-player {
+    margin: 5px;
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

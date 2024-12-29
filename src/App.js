@@ -23,9 +23,8 @@ function App() {
     const [isGameFinished, setIsGameFinished] = useState(false);
     const [finalGifts, setFinalGifts] = useState(null);
     const [showTurns, setShowTurns] = useState(false);
-    const webSocketUrl = 'ws://147.45.76.555:9090/ws/games';
+    const webSocketUrl = 'ws://147.45.76.239:8080/ws/games';
 
-    console.log("webSocketUrl", webSocketUrl);
     const {sendMessage} = UseWebSocket(
         webSocketUrl,
         (message) => {

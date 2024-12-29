@@ -6,7 +6,7 @@ const useWebSocket = (url, onMessageCallback) => {
     const [isConnected, setIsConnected] = useState(false); // Состояние для отслеживания подключения
 
     useEffect(() => {
-        const socket = new WebSocket("'ws://147.45.76.239:8080/ws/game'");
+        const socket = new WebSocket("ws://147.45.76.239:8080/ws/game");
         socketRef.current = socket;
 
         socket.onopen = () => {

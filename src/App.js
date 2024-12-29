@@ -23,7 +23,7 @@ function App() {
     const [isGameFinished, setIsGameFinished] = useState(false);
     const [finalGifts, setFinalGifts] = useState(null);
     const [showTurns, setShowTurns] = useState(false);
-    const webSocketUrl = 'ws://147.45.76.239:8080/ws/games';
+    const webSocketUrl = 'wss://quqee.tech/ws/game';
 
     const {sendMessage} = UseWebSocket(
         webSocketUrl,

@@ -4,9 +4,10 @@ import {ReactComponent as GiftSvg} from '../assets/gift.svg';
 import {ReactComponent as RectangleSvg} from '../assets/hand_rectangle.svg';
 import {ReactComponent as SmallRectangleSvg} from '../assets/rectangle_small.svg';
 
-const PlayerCard = ({name, turn, position, onGiftClick, onCardClick, isDisconnected}) => {
+const PlayerCard = ({name, turn, position, onGiftClick, onCardClick, isDisconnected, isPlayerTurn}) => {
     return (
-        <div className="player-card" style={{opacity: isDisconnected ? 0.5 : 1}} onClick={onCardClick}>
+        <div className={`player-card ${isPlayerTurn ? 'highlight' : ''}`} style={{opacity: isDisconnected ? 0.5 : 1}}
+             onClick={onCardClick}>
             <div className="gift" onClick={onGiftClick}>
                 <GiftSvg/>
             </div>

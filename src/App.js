@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import RoundInfo from './components/RoundInfo';
-import PlayerCard from './components/PlayerCard';
-import AdminPanel from './components/AdminPanel';
-import JoinGame from './components/JoinGame';
+import RoundInfo from './roundinfo/RoundInfo';
+import PlayerCard from './playercard/PlayerCard';
+import AdminPanel from './admin/AdminPanel';
+import JoinGame from './joingame/JoinGame';
 import UseWebSocket from './components/WebSocket';
 import './App.css';
-import './components/FinalInfo.css'
-import './components/Waiting.css'
-import RoundAdditionalInfo from "./components/RoundAdditionalInfo";
+import './final/FinalInfo.css'
+import './waiting/Waiting.css'
+import RoundAdditionalInfo from "./roundinfo/RoundAdditionalInfo";
 
 function App() {
     const [roundText, setRoundText] = useState('??');
@@ -23,7 +23,8 @@ function App() {
     const [isGameFinished, setIsGameFinished] = useState(false);
     const [finalGifts, setFinalGifts] = useState(null);
     const [showTurns, setShowTurns] = useState(false);
-    const webSocketUrl = 'ws://147.45.76.239:8080/ws/game';
+    // const webSocketUrl = 'ws://147.45.76.239:8080/ws/game';
+    const webSocketUrl = 'ws://localhost:8080/ws/game';
 
     const {sendMessage} = UseWebSocket(
         webSocketUrl,
@@ -87,6 +88,7 @@ function App() {
                     break
                 case "PLAYER_TURN":
                     // console.log('Player:', message.data);
+                    // todo подсветку для игрока который ходит
                     setSwapPlayerTurn(message.data);
                     if (message.data) {
                         setRoundAdditionalText("Очередь игрока: " + message.data.name);
@@ -178,6 +180,7 @@ function App() {
                             onGiftClick={() => handleGiftClick(player)}
                             onCardClick={() => handleCardClick(player)}
                             isDisconnected={player.disconnected}
+                            isPlayerTurn={swapPlayerTurn !== null && swapPlayerTurn.id === player.id}
                 />
             ))}
         </div>

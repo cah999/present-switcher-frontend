@@ -6,18 +6,18 @@ const UseWebSocket = (url, onMessageCallback) => {
     const [isConnected, setIsConnected] = useState(false); // Состояние для отслеживания подключения
 
     useEffect(() => {
-        // console.log("useEffect", url);
+        console.log("useEffect", url);
         const socket = new WebSocket(url);
         socketRef.current = socket;
 
         socket.onopen = () => {
-            // console.log("WebSocket connection established");
+            console.log("WebSocket connection established");
             setIsConnected(true);
         };
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            // console.log("Received message:", data);
+            console.log("Received message:", data);
             onMessageCallback(data);
         };
 
@@ -35,12 +35,12 @@ const UseWebSocket = (url, onMessageCallback) => {
     }, [url]);
 
     const sendMessage = (message) => {
-        // console.log("Sending message:", message);
+        console.log("Sending message:", message);
         if (isConnected) { // Проверяем, что соединение установлено
-            // console.log("Sent message");
+            console.log("Sent message");
             socketRef.current.send(JSON.stringify(message));
         } else {
-            // console.log("Unable to send message, WebSocket is not connected");
+            console.log("Unable to send message, WebSocket is not connected");
         }
     };
 
